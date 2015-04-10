@@ -10,18 +10,16 @@ checkBackup() {
 
   # Check for stale backups
   OUT="<result>"
-  OUT+="<channel>Fresh: $2</channel>" 
+  OUT+="<channel>Backup Age: $2</channel>" 
 
   TIMESTAMP=$($RDIFF_BACKUP --list-increment-sizes $BACKUP_ROOT/$2 | tail -n +3 | head -1 | cut -c 1-25)
   DATE_NOW=`date +"%s"`
   DATE_THEN=`date +"%s" --date="$TIMESTAMP"`
   DATE_DIFF=`expr $DATE_NOW - $DATE_THEN`
-
-  if [ $DATE_DIFF -lt $MAX_AGE_IN_SECONDS ]; then
-    OUT+="<value>0</value>"
-  else 
-    OUT+="<value>1</value>"
-  fi;
+  OUT+="<Value>$DATE_DIFF</Value>"
+  OUT+="<LimitMode>1</LimitMode>"
+  OUT+="<LimitMaxError>$MAX_AGE_IN_SECONDS</LimitMaxError>"
+  OUT+="<CustomUnit>Seconds</CustomUnit>"
   OUT+="<ValueLookup>prtg.standardlookups.offon.stateoffok</ValueLookup>"
   OUT+="</result>"
    
