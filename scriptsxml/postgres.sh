@@ -15,7 +15,7 @@ checkAction() {
     else
       OUT+="<value>1</value>"
     fi;
-    OUT+="<ValueLookup>prtg.standardlookups.offon.stateonok</ValueLookup>"
+    OUT+="<ValueLookup>prtg.standardlookups.offon.stateoffok</ValueLookup>"
     OUT+="</result>"
     echo $OUT
 
